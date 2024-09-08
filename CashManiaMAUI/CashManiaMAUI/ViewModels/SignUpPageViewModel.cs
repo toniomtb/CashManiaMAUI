@@ -7,7 +7,7 @@ namespace CashManiaMAUI.ViewModels;
 public partial class SignUpPageViewModel : ObservableObject
 {
     [ObservableProperty]
-    string? username;
+    string? email;
 
     [ObservableProperty]
     string? password;
