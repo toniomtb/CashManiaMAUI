@@ -1,4 +1,7 @@
-﻿using CashManiaMAUI.Pages;
+﻿using CashManiaMAUI.Automapper;
+using CashManiaMAUI.Pages;
+using CashManiaMAUI.Services;
+using CashManiaMAUI.Services.Interfaces;
 using CashManiaMAUI.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -21,16 +24,26 @@ namespace CashManiaMAUI
     		builder.Logging.AddDebug();
 #endif
 
+            // Automapper
+            builder.Services.AddAutoMapper(typeof(DTOToDomainMappingPorfile), 
+                                           typeof(DomainToDTOMappingProfile));
+
             string localBaseAddress =
-                DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:7221" : "https://localhost:7221";
-            string remoteBaseAddress = "https://192.168.1.10:7221";
+                DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5240" : "http://localhost:5240";
+            string remoteBaseAddress = "http://192.168.1.2:5240";
             builder.Services.AddScoped(sp => new HttpClient() { BaseAddress = new Uri(remoteBaseAddress) });
 
-            //view models
-            builder.Services.AddTransient<SignUpPageViewModel>();
+            // Services
+            builder.Services.AddScoped<IApiService, ApiService>();
+            builder.Services.AddScoped<ICashManiaApiService, CashManiaApiService>();
 
-            //pages
+            // View Models
+            builder.Services.AddTransient<SignUpPageViewModel>();
+            builder.Services.AddTransient<SignInPageViewModel>();
+
+            // Pages
             builder.Services.AddTransient<SignUpPage>();
+            builder.Services.AddTransient<LoginPage>();
 
             return builder.Build();
         }

@@ -1,8 +1,10 @@
-using System;
+using CashManiaMAUI.Services.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace CashManiaMAUI.ViewModels;
 
-public class SignInPageViewModel : ObservableObject
+public partial class SignInPageViewModel(IApiService apiService) : ObservableObject
 {
     [ObservableProperty]
     string? email;
@@ -10,4 +12,20 @@ public class SignInPageViewModel : ObservableObject
     [ObservableProperty]
     string? password;
 
+    [RelayCommand]
+    private async void SignIn()
+    {
+        if (email == null || password == null)
+        {
+            Application.Current.MainPage.DisplayAlert("Error", "All fields are required", "OK");
+            return;
+        }
+
+        var loginResponse =  await apiService.Login(Email, Password);
+
+        if (loginResponse.accessToken == null)
+            Application.Current.MainPage.DisplayAlert("Error", $"Login error, invalid data.", "OK");
+        else
+            Application.Current.MainPage.DisplayAlert("Success", $"Login successful. Access token = {loginResponse.accessToken}", "OK");
+    }
 }

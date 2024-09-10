@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CashManiaMAUI.Services.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Text.RegularExpressions;
 
 namespace CashManiaMAUI.ViewModels;
 
-public partial class SignUpPageViewModel : ObservableObject
+public partial class SignUpPageViewModel(IApiService apiService) : ObservableObject
 {
     [ObservableProperty]
     string? email;
@@ -21,18 +21,17 @@ public partial class SignUpPageViewModel : ObservableObject
         if (!await ValidateSignUpData())
             return;
 
-        Application.Current.MainPage.DisplayAlert("Success", "Sign Up successful", "OK");
+        if(await apiService.Register(Email, Password))
+            Application.Current.MainPage.DisplayAlert("Success", "Sign Up successful, go to Login page", "OK");
+        else
+            Application.Current.MainPage.DisplayAlert("Error", "There was an error signin in", "OK");
     }
 
     private async Task<bool> ValidateSignUpData()
     {
-        if (Username != null && !IsUsernameValid(Username))
-        {
-            await Application.Current.MainPage.DisplayAlert("Error", "Username must contain only letters or numbers.", "OK");
-            return false;
-        }
+        //TODO: VALIDATE EMAIL.
 
-        if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword))
+        if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword))
         {
             await Application.Current.MainPage.DisplayAlert("Error", "All fields are required", "OK");
             return false;
@@ -45,10 +44,5 @@ public partial class SignUpPageViewModel : ObservableObject
         }
 
         return true;
-    }
-
-    private bool IsUsernameValid(string username)
-    {
-        return Regex.IsMatch(username, "^[a-zA-Z0-9]+$");
     }
 }

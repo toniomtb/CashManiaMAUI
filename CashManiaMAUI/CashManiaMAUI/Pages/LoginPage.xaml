@@ -9,10 +9,12 @@
                FontSize="Large"
                HorizontalOptions="Center" />
 
-        <Entry Placeholder="Username" />
+        <Entry Placeholder="Email"
+               Text="{Binding Email}"/>
 
         <Entry Placeholder="Password"
-               IsPassword="True"/>
+               IsPassword="True"
+               Text="{Binding Password}"/>
 
         <Label HorizontalOptions="Center">
             <Label.FormattedText>
@@ -28,7 +30,8 @@
             </Label.FormattedText>
         </Label>
 
-        <Button Text="Login"/>
+        <Button Text="Login"
+                Command="{Binding SignInCommand}" />
 
     </VerticalStackLayout>
 </ContentPage>
