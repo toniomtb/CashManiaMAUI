@@ -3,6 +3,6 @@
 namespace CashManiaMAUI.Services.Interfaces;
 public interface IApiService
 {
-    Task<AccessTokenResponse> Login(string email, string password);
-    Task<bool> Register(string email, string password);
+    Task<AccessTokenResponse> Login(LoginRequest request);
+    Task<RegisterResponse> Register(RegisterRequest request);
 }

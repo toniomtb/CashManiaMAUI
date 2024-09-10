@@ -1,4 +1,6 @@
-﻿using CashManiaMAUI.Services.Interfaces;
+﻿using System.Text.RegularExpressions;
+using CashManiaMAUI.Models.Users;
+using CashManiaMAUI.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -21,19 +23,29 @@ public partial class SignUpPageViewModel(IApiService apiService) : ObservableObj
         if (!await ValidateSignUpData())
             return;
 
-        if(await apiService.Register(Email, Password))
+        var request = new RegisterRequest
+        {
+            email = email,
+            password = password,
+        };
+        var resultRegister = await apiService.Register(request);
+        if (resultRegister.IsSuccess)
             Application.Current.MainPage.DisplayAlert("Success", "Sign Up successful, go to Login page", "OK");
         else
-            Application.Current.MainPage.DisplayAlert("Error", "There was an error signin in", "OK");
+            Application.Current.MainPage.DisplayAlert("Error", $"{resultRegister.ErrorMessage}", "OK");
     }
 
     private async Task<bool> ValidateSignUpData()
     {
-        //TODO: VALIDATE EMAIL.
-
         if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword))
         {
             await Application.Current.MainPage.DisplayAlert("Error", "All fields are required", "OK");
+            return false;
+        }
+
+        if (!IsValidEmail(Email))
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Please enter a valid email address", "OK");
             return false;
         }
 
@@ -44,5 +56,11 @@ public partial class SignUpPageViewModel(IApiService apiService) : ObservableObj
         }
 
         return true;
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return Regex.IsMatch(email, emailRegex);
     }
 }

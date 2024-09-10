@@ -5,5 +5,5 @@ namespace CashManiaMAUI.Services;
 public interface ICashManiaApiService
 {
     Task<AccessTokenResponseDTO> Login(LoginRequestDTO requestDTO);
-    Task<bool> Register(RegisterRequestDTO requestDTO);
+    Task<RegisterResponseDTO> Register(RegisterRequestDTO requestDTO);
 }

@@ -7,31 +7,17 @@ namespace CashManiaMAUI.Services;
 
 public class ApiService(ICashManiaApiService cashManiaApiService, IMapper mapper) : IApiService
 {
-    public async Task<AccessTokenResponse> Login(string email, string password)
+    public async Task<AccessTokenResponse> Login(LoginRequest request)
     {
-        var request = new LoginRequest
-        {
-            email = email,
-            password = password,
-            twoFactorCode = null,
-            twoFactorRecoveryCode = null,
-        };
-
         var requestDTO = mapper.Map<LoginRequestDTO>(request);
-
         var resultLogin = await cashManiaApiService.Login(requestDTO);
         return mapper.Map<AccessTokenResponse>(resultLogin);
     }
 
-    public async Task<bool> Register(string email, string password)
+    public async Task<RegisterResponse> Register(RegisterRequest request)
     {
-        var request = new RegisterRequest
-        {
-            email = email,
-            password = password,
-        };
-
         var requestDTO = mapper.Map<RegisterRequestDTO>(request);
-        return await cashManiaApiService.Register(requestDTO);
+        var resultRegister = await cashManiaApiService.Register(requestDTO);
+        return mapper.Map<RegisterResponse>(resultRegister);
     }
 }

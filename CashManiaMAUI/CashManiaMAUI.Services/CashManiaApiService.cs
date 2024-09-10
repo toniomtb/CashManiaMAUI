@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using CashManiaMAUI.Services.DTOs;
 using CashManiaMAUI.Services.DTOs.Users;
 
 namespace CashManiaMAUI.Services;
@@ -26,7 +27,7 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
         }
     }
 
-    public async Task<bool> Register(RegisterRequestDTO requestDTO)
+    public async Task<RegisterResponseDTO> Register(RegisterRequestDTO requestDTO)
     {
         try
         {
@@ -35,13 +36,28 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
 
             var response = await client.PostAsync("/register", httpContent);
 
-            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+                return new RegisterResponseDTO { IsSuccess = true };
 
-            return true;
+            var errorContent = await response.Content.ReadAsStringAsync();
+            var validationErrors = JsonSerializer.Deserialize<HttpValidationProblemDetailsDTO>(errorContent);
+
+            var errorMessage = string.Join("\n", validationErrors.errors
+                .SelectMany(e => e.Value));
+
+            return new RegisterResponseDTO
+            {
+                IsSuccess = false,
+                ErrorMessage = errorMessage
+            };
         }
         catch (Exception e)
         {
-            return false;
+            return new RegisterResponseDTO
+            {
+                IsSuccess = false,
+                ErrorMessage = "An unexpected error occurred. Please try again."
+            };
         }
     }
 }
