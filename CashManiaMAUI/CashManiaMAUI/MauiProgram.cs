@@ -27,8 +27,8 @@ namespace CashManiaMAUI
             builder.Services.AddAutoMapper(typeof(DTOToDomainMappingPorfile), 
                                            typeof(DomainToDTOMappingProfile));
 
-            string localBaseAddress =
-                DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5240" : "http://localhost:5240";
+            //string localBaseAddress =
+            //    DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5240" : "http://localhost:5240";
             string remoteBaseAddress = "http://192.168.1.2:5240";
             builder.Services.AddScoped(sp => new HttpClient() { BaseAddress = new Uri(remoteBaseAddress) });
 
