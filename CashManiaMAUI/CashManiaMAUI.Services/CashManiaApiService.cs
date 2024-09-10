@@ -40,9 +40,9 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
                 return new RegisterResponseDTO { IsSuccess = true };
 
             var errorContent = await response.Content.ReadAsStringAsync();
-            var validationErrors = JsonSerializer.Deserialize<HttpValidationProblemDetailsDTO>(errorContent);
+            var validationProblemDetails = JsonSerializer.Deserialize<HttpValidationProblemDetailsDTO>(errorContent);
 
-            var errorMessage = string.Join("\n", validationErrors.errors
+            var errorMessage = string.Join("\n", validationProblemDetails.errors
                 .SelectMany(e => e.Value));
 
             return new RegisterResponseDTO

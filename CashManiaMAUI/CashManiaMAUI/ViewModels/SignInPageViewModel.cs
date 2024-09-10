@@ -5,7 +5,8 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CashManiaMAUI.ViewModels;
 
-public partial class SignInPageViewModel(IApiService apiService) : ObservableObject
+public partial class SignInPageViewModel(IApiService apiService,
+    ISecureStorageService secureStorageService) : ObservableObject
 {
     [ObservableProperty]
     string? email;
@@ -16,24 +17,27 @@ public partial class SignInPageViewModel(IApiService apiService) : ObservableObj
     [RelayCommand]
     private async void SignIn()
     {
-        if (email == null || password == null)
+        if (Email == null || Password == null)
         {
-            Application.Current.MainPage.DisplayAlert("Error", "All fields are required", "OK");
+            await Application.Current.MainPage.DisplayAlert("Error", "All fields are required", "OK");
             return;
         }
 
         var request = new LoginRequest
         {
-            email = email,
-            password = password,
+            email = Email,
+            password = Password,
             twoFactorCode = null,
             twoFactorRecoveryCode = null,
         };
         var loginResponse =  await apiService.Login(request);
 
         if (loginResponse.accessToken == null)
-            Application.Current.MainPage.DisplayAlert("Error", $"Login error, invalid data.", "OK");
+            await Application.Current.MainPage.DisplayAlert("Error", $"Login error, invalid data.", "OK");
         else
-            Application.Current.MainPage.DisplayAlert("Success", $"Login successful. Access token = {loginResponse.accessToken}", "OK");
+        {
+            await Application.Current.MainPage.DisplayAlert("Success", $"Login successful. Access token = {loginResponse.accessToken}", "OK");
+            secureStorageService.StoreLoginTokenAsync(loginResponse.accessToken);
+        }
     }
 }

@@ -25,14 +25,14 @@ public partial class SignUpPageViewModel(IApiService apiService) : ObservableObj
 
         var request = new RegisterRequest
         {
-            email = email,
-            password = password,
+            email = Email,
+            password = Password,
         };
         var resultRegister = await apiService.Register(request);
         if (resultRegister.IsSuccess)
-            Application.Current.MainPage.DisplayAlert("Success", "Sign Up successful, go to Login page", "OK");
+            await Application.Current.MainPage.DisplayAlert("Success", "Sign Up successful, go to Login page", "OK");
         else
-            Application.Current.MainPage.DisplayAlert("Error", $"{resultRegister.ErrorMessage}", "OK");
+            await Application.Current.MainPage.DisplayAlert("Error", $"{resultRegister.ErrorMessage}", "OK");
     }
 
     private async Task<bool> ValidateSignUpData()
