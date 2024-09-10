@@ -10,7 +10,6 @@ namespace CashManiaMAUI
 
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         }
     }
 }

@@ -15,8 +15,4 @@
                   ContentTemplate="{DataTemplate pages:SignUpPage}"
                   Route="SignUpPage" />
 
-    <ShellContent Title="Home"
-                  ContentTemplate="{DataTemplate pages:MainPage}"
-                  Route="MainPage" />
-
 </Shell>
