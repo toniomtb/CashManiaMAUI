@@ -18,4 +18,8 @@
                   ContentTemplate="{DataTemplate pages:HomePage}"
                   Route="HomePage" />
 
+    <ShellContent Title="AddTransaction"
+                  ContentTemplate="{DataTemplate pages:AddTransactionPage}"
+                  Route="AddTransactionPage" />
+
 </Shell>

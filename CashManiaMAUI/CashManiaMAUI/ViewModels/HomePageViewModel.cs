@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using CashManiaMAUI.Models.Transactions;
+using CashManiaMAUI.Pages;
 using CashManiaMAUI.Services.Interfaces;
 using CommunityToolkit.Mvvm.Input;
 
@@ -40,11 +41,7 @@ namespace CashManiaMAUI.ViewModels
         [RelayCommand]
         public async Task LoadTransactions()
         {
-            var authToken = await _secureStorageService.GetLoginTokenAsync();
-            if (authToken == null)
-                return;
-            
-            var transactions = await _apiService.GetTransactionsFiltered(authToken, StartDate, EndDate);
+            var transactions = await _apiService.GetTransactionsFiltered(StartDate, EndDate);
 
             if (transactions == null)
             {
@@ -53,12 +50,20 @@ namespace CashManiaMAUI.ViewModels
             }
 
             Transactions.Clear();
-            foreach (var transaction in transactions)
+            foreach (var transaction in transactions.OrderByDescending(x => x.Date))
             {
                 Transactions.Add(transaction);
             }
 
             CalculateTotals();
+        }
+
+        [RelayCommand]
+        public async Task AddTransaction()
+        {
+            await Shell.Current.GoToAsync(nameof(AddTransactionPage));
+
+            LoadTransactionsCommand.Execute(null);
         }
 
         private void CalculateTotals()

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CashManiaMAUI.Models.Transactions;
 using CashManiaMAUI.Models.Users;
+using CashManiaMAUI.Services.DTOs.Transactions;
 using CashManiaMAUI.Services.DTOs.Users;
 
 namespace CashManiaMAUI.Automapper;
@@ -9,6 +11,7 @@ public class DomainToDTOMappingProfile : Profile
     {
         MapLogin();
         MapRegister();
+        MapTransaction();
     }
 
     private void MapLogin()
@@ -19,5 +22,10 @@ public class DomainToDTOMappingProfile : Profile
     private void MapRegister()
     {
         CreateMap<RegisterRequest, RegisterRequestDto>();
+    }
+
+    private void MapTransaction()
+    {
+        CreateMap<Transaction, TransactionDto>();
     }
 }

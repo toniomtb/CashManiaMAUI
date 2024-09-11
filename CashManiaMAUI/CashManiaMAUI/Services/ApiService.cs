@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using CashManiaMAUI.Models.Transactions;
 using CashManiaMAUI.Models.Users;
+using CashManiaMAUI.Services.DTOs.Transactions;
 using CashManiaMAUI.Services.DTOs.Users;
 using CashManiaMAUI.Services.Interfaces;
 
 namespace CashManiaMAUI.Services;
 
-public class ApiService(ICashManiaApiService cashManiaApiService, IMapper mapper) : IApiService
+public class ApiService(ISecureStorageService secureStorageService,
+    ICashManiaApiService cashManiaApiService, IMapper mapper) : IApiService
 {
     public async Task<AccessTokenResponse> Login(LoginRequest request)
     {
@@ -22,8 +24,22 @@ public class ApiService(ICashManiaApiService cashManiaApiService, IMapper mapper
         return mapper.Map<RegisterResponse>(resultRegister);
     }
 
-    public async Task<IEnumerable<Transaction>?> GetTransactionsFiltered(string authToken, DateTime startDate, DateTime endDate)
+    public async Task<bool> AddTransaction(Transaction transaction)
     {
+        var authToken = await secureStorageService.GetLoginTokenAsync();
+        if (authToken == null)
+            return false;
+
+        var transactionDto = mapper.Map<TransactionDto>(transaction);
+        return await cashManiaApiService.AddTransaction(authToken, transactionDto);
+    }
+
+    public async Task<IEnumerable<Transaction>?> GetTransactionsFiltered(DateTime startDate, DateTime endDate)
+    {
+        var authToken = await secureStorageService.GetLoginTokenAsync();
+        if (authToken == null)
+            return null;
+
         var resultGet = await cashManiaApiService.GetTransactionsFiltered(authToken, startDate, endDate);
         return mapper.Map<IEnumerable<Transaction>>(resultGet);
     }

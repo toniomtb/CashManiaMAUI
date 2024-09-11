@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CashManiaMAUI.Pages.AddTransactionPage"
+             Title="AddTransactionPage">
+    <VerticalStackLayout Padding="20"
+                         Spacing="20">
+        <Label Text="Add a New Transaction"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Entry Placeholder="Description"
+               Text="{Binding Description}" />
+        <Entry Placeholder="Amount"
+               Text="{Binding Amount}"
+               Keyboard="Numeric" />
+
+        <DatePicker Date="{Binding Date}" />
+
+        <Label Text="Transaction Type"
+               FontSize="16"
+               FontAttributes="Bold" />
+        <HorizontalStackLayout Spacing="10">
+            <RadioButton Content="Expense"
+                         GroupName="TransactionType"
+                         IsChecked="{Binding IsExpense}" />
+            <RadioButton Content="Income"
+                         GroupName="TransactionType"
+                         IsChecked="{Binding IsIncome}" />
+        </HorizontalStackLayout>
+
+        <Button Text="Save Transaction"
+                Command="{Binding SaveTransactionCommand}" />
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -72,9 +72,9 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
 
             string start = startDate.ToString("yyyy-MM-dd");
             string end = endDate.ToString("yyyy-MM-dd");
-            string url = $"/api/Transaction/get-filtered?startDate={start}&endDate={end}"; //TODO: no hardcode urls
+            string url = $"/api/Transaction/get-filtered?startDate={start}&endDate={end}"; //TODO: no hardcoded urls
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            var response = await client.GetAsync(url);
 
             response.EnsureSuccessStatusCode();
 
@@ -86,6 +86,27 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
         catch (Exception e)
         {
             return null;
+        }
+    }
+
+    public async Task<bool> AddTransaction(string authToken, TransactionDto transactionDto)
+    {
+        try
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+
+            var jsonContent = JsonSerializer.Serialize(transactionDto);
+            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json"); 
+
+            var response = await client.PostAsync("/api/Transaction/add", httpContent); //TODO: no hardcoded urls
+
+            response.EnsureSuccessStatusCode();
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 }

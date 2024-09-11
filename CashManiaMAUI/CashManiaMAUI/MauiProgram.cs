@@ -44,11 +44,13 @@ namespace CashManiaMAUI
             builder.Services.AddTransient<SignUpPageViewModel>();
             builder.Services.AddTransient<SignInPageViewModel>();
             builder.Services.AddTransient<HomePageViewModel>();
+            builder.Services.AddTransient<AddTransactionPageViewModel>();
 
             // Pages
             builder.Services.AddTransient<SignUpPage>();
             builder.Services.AddTransient<SignInPage>();
             builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<AddTransactionPage>();
 
             return builder.Build();
         }
