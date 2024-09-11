@@ -14,11 +14,9 @@
     </ContentPage.Behaviors>
 
     <Grid>
-        <!-- Main content -->
         <VerticalStackLayout Padding="20"
                              Spacing="20">
 
-            <!-- Grid for Income, Expenses, and Total -->
             <Grid ColumnDefinitions="*,*,*"
                   RowDefinitions="Auto,Auto"
                   HorizontalOptions="FillAndExpand">
@@ -58,33 +56,18 @@
                        Grid.Column="2" />
             </Grid>
 
-            <!-- Grid for Start Date and End Date -->
-            <Grid ColumnDefinitions="Auto, *"
-                  RowDefinitions="Auto, Auto"
-                  HorizontalOptions="FillAndExpand">
-                <Label Text="Start Date:"
+            <HorizontalStackLayout>
+                <Label Text="From:"
                        VerticalOptions="Center"
-                       Grid.Row="0"
-                       Grid.Column="0"
                        Margin="0,0,10,0" />
                 <DatePicker Date="{Binding StartDate}"
-                            Format="D"
-                            HorizontalOptions="FillAndExpand"
-                            Grid.Row="0"
-                            Grid.Column="1" />
-                <Label Text="End Date:"
+                            Margin="0,0,10,0"/>
+                <Label Text="To:"
                        VerticalOptions="Center"
-                       Grid.Row="1"
-                       Grid.Column="0"
                        Margin="0,0,10,0" />
-                <DatePicker Date="{Binding EndDate}"
-                            Format="D"
-                            HorizontalOptions="FillAndExpand"
-                            Grid.Row="1"
-                            Grid.Column="1" />
-            </Grid>
+                <DatePicker Date="{Binding EndDate}" />
+            </HorizontalStackLayout>
 
-            <!-- CollectionView for Movements -->
             <CollectionView ItemsSource="{Binding Transactions}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="transactions:Transaction">
@@ -108,7 +91,6 @@
 
         </VerticalStackLayout>
 
-        <!-- Floating Action Button -->
         <Button Text="+"
                 FontSize="24"
                 CornerRadius="30"
