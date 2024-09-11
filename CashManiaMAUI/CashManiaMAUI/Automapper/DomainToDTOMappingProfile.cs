@@ -13,11 +13,11 @@ public class DomainToDTOMappingProfile : Profile
 
     private void MapLogin()
     {
-        CreateMap<LoginRequest, LoginRequestDTO>();
+        CreateMap<LoginRequest, LoginRequestDto>();
     }
 
     private void MapRegister()
     {
-        CreateMap<RegisterRequest, RegisterRequestDTO>();
+        CreateMap<RegisterRequest, RegisterRequestDto>();
     }
 }

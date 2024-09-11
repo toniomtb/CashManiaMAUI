@@ -2,17 +2,20 @@
 <Shell x:Class="CashManiaMAUI.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:CashManiaMAUI"
        xmlns:pages="clr-namespace:CashManiaMAUI.Pages"
        Shell.FlyoutBehavior="Disabled"
        Title="CashManiaMAUI">
 
     <ShellContent Title="Login"
-                  ContentTemplate="{DataTemplate pages:LoginPage}"
+                  ContentTemplate="{DataTemplate pages:SignInPage}"
                   Route="LoginPage" />
 
     <ShellContent Title="Sign Up"
                   ContentTemplate="{DataTemplate pages:SignUpPage}"
                   Route="SignUpPage" />
+
+    <ShellContent Title="Home"
+                  ContentTemplate="{DataTemplate pages:HomePage}"
+                  Route="HomePage" />
 
 </Shell>

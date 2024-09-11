@@ -2,9 +2,9 @@ using CashManiaMAUI.ViewModels;
 
 namespace CashManiaMAUI.Pages;
 
-public partial class LoginPage : ContentPage
+public partial class SignInPage : ContentPage
 {
-	public LoginPage(SignInPageViewModel vm)
+	public SignInPage(SignInPageViewModel vm)
 	{
 		InitializeComponent();
         BindingContext = vm;

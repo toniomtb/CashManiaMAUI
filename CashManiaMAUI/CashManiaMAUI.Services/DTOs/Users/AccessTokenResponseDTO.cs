@@ -1,6 +1,6 @@
 namespace CashManiaMAUI.Services.DTOs.Users;
 
-public record AccessTokenResponseDTO
+public record AccessTokenResponseDto
 {
     public string? tokenType { get; set; }
     public string? accessToken { get; set; }

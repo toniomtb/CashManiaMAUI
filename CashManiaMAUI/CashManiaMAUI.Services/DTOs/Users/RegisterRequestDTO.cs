@@ -1,6 +1,6 @@
 ﻿namespace CashManiaMAUI.Services.DTOs.Users;
 
-public class RegisterRequestDTO
+public class RegisterRequestDto
 {
     public string? email { get; set; }
     public string? password { get; set; }

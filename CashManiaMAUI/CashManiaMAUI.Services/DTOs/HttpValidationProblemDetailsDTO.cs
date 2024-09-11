@@ -1,6 +1,6 @@
 ﻿namespace CashManiaMAUI.Services.DTOs;
 
-public class HttpValidationProblemDetailsDTO
+public class HttpValidationProblemDetailsDto
 {
     public string? type { get; set; }
     public string? title { get; set; }

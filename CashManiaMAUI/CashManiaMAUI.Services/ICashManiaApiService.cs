@@ -1,9 +1,11 @@
+using CashManiaMAUI.Services.DTOs.Transactions;
 using CashManiaMAUI.Services.DTOs.Users;
 
 namespace CashManiaMAUI.Services;
 
 public interface ICashManiaApiService
 {
-    Task<AccessTokenResponseDTO> Login(LoginRequestDTO requestDTO);
-    Task<RegisterResponseDTO> Register(RegisterRequestDTO requestDTO);
+    Task<AccessTokenResponseDto> Login(LoginRequestDto requestDTO);
+    Task<RegisterResponseDto> Register(RegisterRequestDto requestDTO);
+    Task<IEnumerable<TransactionDto>?> GetTransactionsFiltered(string authToken, DateTime startDate, DateTime endDate);
 }

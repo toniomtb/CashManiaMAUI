@@ -1,4 +1,5 @@
 using CashManiaMAUI.Models.Users;
+using CashManiaMAUI.Pages;
 using CashManiaMAUI.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -36,8 +37,9 @@ public partial class SignInPageViewModel(IApiService apiService,
             await Application.Current.MainPage.DisplayAlert("Error", $"Login error, invalid data.", "OK");
         else
         {
-            await Application.Current.MainPage.DisplayAlert("Success", $"Login successful. Access token = {loginResponse.accessToken}", "OK");
             secureStorageService.StoreLoginTokenAsync(loginResponse.accessToken);
+
+            await Shell.Current.GoToAsync("//"+nameof(HomePage));
         }
     }
 }

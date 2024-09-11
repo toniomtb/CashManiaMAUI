@@ -3,7 +3,7 @@ using Android.Runtime;
 
 namespace CashManiaMAUI
 {
-    [Application(UsesCleartextTraffic = true)]
+    [Application(UsesCleartextTraffic = true)] //TODO: REMOVE
     //[Application]
     public class MainApplication : MauiApplication
     {

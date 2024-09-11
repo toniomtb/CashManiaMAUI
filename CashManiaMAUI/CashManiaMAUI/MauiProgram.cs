@@ -3,6 +3,7 @@ using CashManiaMAUI.Pages;
 using CashManiaMAUI.Services;
 using CashManiaMAUI.Services.Interfaces;
 using CashManiaMAUI.ViewModels;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace CashManiaMAUI
@@ -14,6 +15,7 @@ namespace CashManiaMAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -41,10 +43,12 @@ namespace CashManiaMAUI
             // View Models
             builder.Services.AddTransient<SignUpPageViewModel>();
             builder.Services.AddTransient<SignInPageViewModel>();
+            builder.Services.AddTransient<HomePageViewModel>();
 
             // Pages
             builder.Services.AddTransient<SignUpPage>();
-            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<SignInPage>();
+            builder.Services.AddTransient<HomePage>();
 
             return builder.Build();
         }
