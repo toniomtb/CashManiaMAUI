@@ -3,6 +3,7 @@ using CashManiaMAUI.Pages;
 using CashManiaMAUI.Services;
 using CashManiaMAUI.Services.Interfaces;
 using CashManiaMAUI.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace CashManiaMAUI
 {
