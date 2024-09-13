@@ -127,4 +127,23 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
             return false;
         }
     }
+
+    public async Task<bool> DeleteTransaction(string authToken, int transactionId)
+    {
+        try
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+
+            string url = $"/api/Transaction/delete/{transactionId}";
+            var response = await client.DeleteAsync(url); //TODO: no hardcoded urls
+
+            response.EnsureSuccessStatusCode();
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
 }

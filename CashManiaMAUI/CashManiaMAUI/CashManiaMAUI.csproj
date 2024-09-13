@@ -122,12 +122,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\ModifyTransactionPage.xaml.cs">
+	    <DependentUpon>ModifyTransactionPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\SignInPage.xaml.cs">
 	    <DependentUpon>SignInPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\ModifyTransactionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\AddTransactionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

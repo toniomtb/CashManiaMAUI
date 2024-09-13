@@ -55,6 +55,6 @@ public class ApiService(ISecureStorageService secureStorageService,
         if (authToken == null)
             return false;
 
-        return cashManiaApiService.DeleteTransaction(int transactionId);
+        return await cashManiaApiService.DeleteTransaction(authToken, transactionId);
     }
 }

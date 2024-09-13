@@ -10,4 +10,5 @@ public interface ICashManiaApiService
     Task<bool> CheckLoginTokenIsValid(string authToken);
     Task<IEnumerable<TransactionDto>?> GetTransactionsFiltered(string authToken, DateTime startDate, DateTime endDate);
     Task<bool> AddTransaction(string authToken, TransactionDto transactionDto);
+    Task<bool> DeleteTransaction(string authToken, int transactionId);
 }

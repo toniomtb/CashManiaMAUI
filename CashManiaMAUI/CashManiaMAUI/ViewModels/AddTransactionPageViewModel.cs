@@ -12,7 +12,7 @@ namespace CashManiaMAUI.ViewModels
         private string description;
 
         [ObservableProperty]
-        private decimal amount;
+        private decimal? amount = null;
 
         [ObservableProperty]
         private DateTime date = DateTime.Now;
@@ -23,7 +23,19 @@ namespace CashManiaMAUI.ViewModels
         [RelayCommand]
         public async Task SaveTransaction()
         {
-            var finalAmount = IsExpense ? -Math.Abs(Amount) : Math.Abs(Amount);
+            if (Description == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Enter the description", "OK");
+                return;
+            }
+
+            if (Amount == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Enter the amount", "OK");
+                return;
+            }
+
+            var finalAmount = IsExpense ? -Math.Abs(Amount.Value) : Math.Abs(Amount.Value);
 
             var transaction = new Transaction
             {

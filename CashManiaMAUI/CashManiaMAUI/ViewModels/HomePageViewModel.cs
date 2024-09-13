@@ -15,6 +15,9 @@ namespace CashManiaMAUI.ViewModels
         public ObservableCollection<Transaction> Transactions { get; set; } = new();
 
         [ObservableProperty]
+        private Transaction? selectedTransaction;
+
+        [ObservableProperty]
         private decimal income;
 
         [ObservableProperty]
@@ -82,6 +85,21 @@ namespace CashManiaMAUI.ViewModels
             else
                 await Application.Current.MainPage.DisplayAlert("Error", "Could not delete transaction.", "OK");
         }
+
+        [RelayCommand]
+        private async Task TransactionSelected()
+        {
+            if (SelectedTransaction != null)
+            {
+                var navigationParameter = new Dictionary<string, object>
+                {
+                    { "SelectedTransaction", SelectedTransaction }
+                };
+
+                await Shell.Current.GoToAsync(nameof(ModifyTransactionPage), navigationParameter);
+            }
+        }
+
 
         private void CalculateTotals()
         {
