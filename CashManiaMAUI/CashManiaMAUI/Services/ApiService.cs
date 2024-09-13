@@ -24,6 +24,11 @@ public class ApiService(ISecureStorageService secureStorageService,
         return mapper.Map<RegisterResponse>(resultRegister);
     }
 
+    public async Task<bool> CheckLoginTokenIsValid(string authToken)
+    {
+        return await cashManiaApiService.CheckLoginTokenIsValid(authToken);
+    }
+
     public async Task<bool> AddTransaction(Transaction transaction)
     {
         var authToken = await secureStorageService.GetLoginTokenAsync();

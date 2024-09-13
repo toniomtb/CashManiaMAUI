@@ -64,6 +64,24 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
         }
     }
 
+    public async Task<bool> CheckLoginTokenIsValid(string authToken)
+    {
+        try
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+            string url = "/api/CheckToken/checkTokenIsValid"; //TODO: no harcoded urls
+
+            var response = await client.GetAsync(url);
+
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
     public async Task<IEnumerable<TransactionDto>?> GetTransactionsFiltered(string authToken, DateTime startDate, DateTime endDate)
     {
         try

@@ -6,6 +6,7 @@ public interface IApiService
 {
     Task<AccessTokenResponse> Login(LoginRequest request);
     Task<RegisterResponse> Register(RegisterRequest request);
+    Task<bool> CheckLoginTokenIsValid(string authToken);
     Task<IEnumerable<Transaction>?> GetTransactionsFiltered(DateTime startDate, DateTime endDate);
     Task<bool> AddTransaction(Transaction transaction);
 }
