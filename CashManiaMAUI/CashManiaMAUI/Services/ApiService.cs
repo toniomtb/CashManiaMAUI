@@ -48,4 +48,13 @@ public class ApiService(ISecureStorageService secureStorageService,
         var resultGet = await cashManiaApiService.GetTransactionsFiltered(authToken, startDate, endDate);
         return mapper.Map<IEnumerable<Transaction>>(resultGet);
     }
+
+    public async Task<bool> DeleteTransaction(int transactionId)
+    {
+        var authToken = await secureStorageService.GetLoginTokenAsync();
+        if (authToken == null)
+            return false;
+
+        return cashManiaApiService.DeleteTransaction(int transactionId);
+    }
 }

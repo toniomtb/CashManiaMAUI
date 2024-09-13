@@ -66,6 +66,23 @@ namespace CashManiaMAUI.ViewModels
             LoadTransactionsCommand.Execute(null);
         }
 
+        [RelayCommand]
+        public async Task DeleteTransaction(Transaction transaction)
+        {
+            if (transaction == null)
+                return;
+
+            var success = await _apiService.DeleteTransaction(transaction.Id);
+
+            if (success)
+            {
+                Transactions.Remove(transaction);
+                CalculateTotals();
+            }
+            else
+                await Application.Current.MainPage.DisplayAlert("Error", "Could not delete transaction.", "OK");
+        }
+
         private void CalculateTotals()
         {
             Income = Transactions.Where(t => t.Amount > 0).Sum(t => t.Amount);

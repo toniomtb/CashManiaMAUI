@@ -9,4 +9,5 @@ public interface IApiService
     Task<bool> CheckLoginTokenIsValid(string authToken);
     Task<IEnumerable<Transaction>?> GetTransactionsFiltered(DateTime startDate, DateTime endDate);
     Task<bool> AddTransaction(Transaction transaction);
+    Task<bool> DeleteTransaction(int transactionId);
 }
