@@ -17,7 +17,7 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
             var jsonContent = JsonSerializer.Serialize(requestDTO);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("/login", httpContent);
+            var response = await client.PostAsync("/login", httpContent); //TODO: no hardcoded urls
 
             response.EnsureSuccessStatusCode();
 
@@ -37,7 +37,7 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
             var jsonContent = JsonSerializer.Serialize(requestDTO);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("/register", httpContent);
+            var response = await client.PostAsync("/register", httpContent); //TODO: no hardcoded urls
 
             if (response.IsSuccessStatusCode)
                 return new RegisterResponseDto { IsSuccess = true };
@@ -136,6 +136,27 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
 
             string url = $"/api/Transaction/delete/{transactionId}";
             var response = await client.DeleteAsync(url); //TODO: no hardcoded urls
+
+            response.EnsureSuccessStatusCode();
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateTransaction(string authToken, TransactionDto transactionDto)
+    {
+        try
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+
+            var jsonContent = JsonSerializer.Serialize(transactionDto);
+            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("/api/Transaction/update", httpContent); //TODO: no hardcoded urls
 
             response.EnsureSuccessStatusCode();
 

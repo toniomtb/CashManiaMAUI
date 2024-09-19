@@ -10,4 +10,5 @@ public interface IApiService
     Task<IEnumerable<Transaction>?> GetTransactionsFiltered(DateTime startDate, DateTime endDate);
     Task<bool> AddTransaction(Transaction transaction);
     Task<bool> DeleteTransaction(int transactionId);
+    Task<bool> UpdateTransaction(Transaction transaction);
 }

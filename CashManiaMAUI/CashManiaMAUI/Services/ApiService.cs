@@ -57,4 +57,14 @@ public class ApiService(ISecureStorageService secureStorageService,
 
         return await cashManiaApiService.DeleteTransaction(authToken, transactionId);
     }
+
+    public async Task<bool> UpdateTransaction(Transaction transaction)
+    {
+        var authToken = await secureStorageService.GetLoginTokenAsync();
+        if (authToken == null)
+            return false;
+
+        var transactionDto = mapper.Map<TransactionDto>(transaction);
+        return await cashManiaApiService.UpdateTransaction(authToken, transactionDto);
+    }
 }

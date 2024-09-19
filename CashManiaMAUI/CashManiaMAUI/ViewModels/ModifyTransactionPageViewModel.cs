@@ -42,33 +42,34 @@ namespace CashManiaMAUI.ViewModels
         [RelayCommand]
         public async Task SaveTransaction()
         {
-            //if (Description == null)
-            //{
-            //    await Application.Current.MainPage.DisplayAlert("Error", "Enter the description", "OK");
-            //    return;
-            //}
+            if (Description == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Enter the description", "OK");
+                return;
+            }
 
-            //if (Amount == null)
-            //{
-            //    await Application.Current.MainPage.DisplayAlert("Error", "Enter the amount", "OK");
-            //    return;
-            //}
+            if (Amount == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Enter the amount", "OK");
+                return;
+            }
 
-            //var finalAmount = IsExpense ? -Math.Abs(Amount.Value) : Math.Abs(Amount.Value);
+            var finalAmount = IsExpense ? -Math.Abs(Amount.Value) : Math.Abs(Amount.Value);
 
-            //var transaction = new Transaction
-            //{
-            //    Amount = finalAmount,
-            //    Type = isExpense ? TransactionType.Expense : TransactionType.Income,
-            //    Date = Date,
-            //    Description = Description
-            //};
-            //bool addResult = await apiService.AddTransaction(transaction);
+            var transaction = new Transaction
+            {
+                Id = SelectedTransaction.Id,
+                Amount = finalAmount,
+                Type = isExpense ? TransactionType.Expense : TransactionType.Income,
+                Date = Date,
+                Description = Description
+            };
+            bool addResult = await apiService.UpdateTransaction(transaction);
 
-            //if(!addResult)
-            //    await Application.Current.MainPage.DisplayAlert("Error", "Error modifying transaction", "OK");
+            if (!addResult)
+                await Application.Current.MainPage.DisplayAlert("Error", "Error modifying transaction", "OK");
 
-            //await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..");
         }
 
     }
