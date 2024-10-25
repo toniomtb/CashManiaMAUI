@@ -20,6 +20,9 @@ namespace CashManiaMAUI.ViewModels
         [ObservableProperty]
         private bool isExpense = true;
 
+        [ObservableProperty]
+        private bool isIncome = false;
+
         [RelayCommand]
         public async Task SaveTransaction()
         {

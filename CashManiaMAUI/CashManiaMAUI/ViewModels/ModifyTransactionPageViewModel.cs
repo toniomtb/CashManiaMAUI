@@ -21,8 +21,10 @@ namespace CashManiaMAUI.ViewModels
         [ObservableProperty]
         private bool isExpense = true;
 
-        private Transaction selectedTransaction;
+        [ObservableProperty]
+        private bool isIncome = false;
 
+        private Transaction selectedTransaction;
         public Transaction SelectedTransaction
         {
             get => selectedTransaction;
@@ -35,6 +37,7 @@ namespace CashManiaMAUI.ViewModels
                     Amount = selectedTransaction.Amount;
                     Date = selectedTransaction.Date;
                     IsExpense = selectedTransaction.Amount < 0;
+                    IsIncome = !isExpense;
                 }
             }
         }
@@ -59,6 +62,7 @@ namespace CashManiaMAUI.ViewModels
             var transaction = new Transaction
             {
                 Id = SelectedTransaction.Id,
+                CategoryId = SelectedTransaction.CategoryId,
                 Amount = finalAmount,
                 Type = isExpense ? TransactionType.Expense : TransactionType.Income,
                 Date = Date,

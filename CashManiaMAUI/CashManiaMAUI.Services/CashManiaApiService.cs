@@ -156,7 +156,7 @@ public class CashManiaApiService(HttpClient client) : ICashManiaApiService
             var jsonContent = JsonSerializer.Serialize(transactionDto);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("/api/Transaction/update", httpContent); //TODO: no hardcoded urls
+            var response = await client.PutAsync("/api/Transaction/update", httpContent); //TODO: no hardcoded urls
 
             response.EnsureSuccessStatusCode();
 
